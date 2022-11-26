@@ -18,7 +18,15 @@ void MergeSort(T* list,size_t size,bool (*Compare)(T,T));
 template <typename T>
 void HeapSort(T* list,size_t size,bool (*Compare)(T,T));
 
-
+/***
+ *
+ * 冒泡排序
+ * 使用方式:
+ * 传入自定义的Compare函数指针。
+ *
+ * 通过n^2次遍历 将极值放到对应位置
+ *
+ * */
 template <typename T>
 void BubbleSort(T* list,size_t size,bool (*Compare)(T,T))
 {
@@ -35,6 +43,16 @@ void BubbleSort(T* list,size_t size,bool (*Compare)(T,T))
         }
     }
 }
+
+/***
+ *
+ * 选择排序
+ * 使用方式:
+ * 传入自定义的Compare函数指针
+ *
+ * 每趟遍历将第n大的元素放到第n位
+ * */
+
 template <typename T>
 void SelectionSort(T* list,size_t size,bool (*Compare)(T,T))
 {
@@ -54,6 +72,16 @@ void SelectionSort(T* list,size_t size,bool (*Compare)(T,T))
         }
     }
 }
+
+/***
+ *
+ * 插入排序
+ * 使用方法:
+ * 传入自定义Compare函数指针
+ *
+ * 以开头为有序序列,根据自定义规则将元素插入到合适的位置
+ *
+ * */
 template <typename T>
 void InsertSort(T* list,size_t size,bool (*Compare)(T,T))
 {
@@ -68,6 +96,16 @@ void InsertSort(T* list,size_t size,bool (*Compare)(T,T))
         }
     }
 }
+
+/*
+ *
+ * 希尔排序
+ * 使用方式：
+ * 传入自定义Compare函数指针
+ *
+ * 分组进行插入排序，再不断减小组的个数，达到所有元素的排序
+ *
+ * */
 template <typename T>
 void ShellSort(T* list,size_t size,bool (*Compare)(T,T))
 {
@@ -88,6 +126,7 @@ void ShellSort(T* list,size_t size,bool (*Compare)(T,T))
         }
     }
 }
+
 template <typename T>
 void QuickSort(T* list,size_t left,size_t right,bool (*Compare)(T,T))
 {
@@ -115,11 +154,32 @@ void QuickSort(T* list,size_t left,size_t right,bool (*Compare)(T,T))
     QuickSort(list,start,left-1,Compare);
     QuickSort(list,left+1,end,Compare);
 }
+/***
+ *
+ * 快速排序
+ * 使用方式:
+ * 传入自定义Compare函数指针
+ *
+ * 通过分治的方式，将Key元素的左右两边分别放置小于或大于其的元素
+ * 再细分进行同样的操作 直至组内只有一个元素
+ *
+ * */
 template <typename T>
 void QuickSort(T* list,size_t size,bool (*Compare)(T,T))
 {
     QuickSort(list,(size_t)0,size-1,Compare);
 }
+
+/***
+ *
+ * 归并排序
+ * 使用方式:
+ * 传入自定义Compare函数指针
+ *
+ * 分治再统一
+ *
+ * */
+
 template <typename T>
 void MergeSort(T* list,size_t left,size_t right,bool (*Compare)(T,T))
 {
@@ -175,6 +235,15 @@ void Heapify(T* list,size_t size,bool (*Compare)(T,T),size_t index)
     }
 }
 
+/***
+ *
+ * 堆排序
+ * 使用方式:
+ * 传入自定义Compare函数指针
+ *
+ * 构建大顶堆并不断维护该大顶堆 顶部元素替换底部元素。
+ *
+ * */
 template <typename T>
 void HeapSort(T* list,size_t size,bool (*Compare)(T,T))
 {

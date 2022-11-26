@@ -5,7 +5,7 @@
 #include <thread>
 #include <limits>
 
-//extern std::thread* threads;
+
 
 template <typename T>
 struct thread_unit{
@@ -33,6 +33,16 @@ void findBounds(T* bucketsSize,T* sortedBoundOfBuckets,int thread_num);
 
 int (*compare)(const void*,const void*);
 
+/***
+ *
+ * 样本排序
+ *
+ * 使用方式：
+ * 传入自定义Compare函数指针
+ *
+ * 一般用于大量数据的多线程排序
+ *
+ * */
 template <typename T>
 void SampleSort(T* array,size_t size,int thread_num,int (*Compare)(const void*,const void*))
 {
