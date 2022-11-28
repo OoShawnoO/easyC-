@@ -1,22 +1,51 @@
-#ifndef TEST_SORT_H
-#define TEST_SORT_H
+#ifndef SORT_H
+#define SORT_H
 
 #include <iostream>
+using namespace std;
+template <typename T>
+bool Greater(T x,T y);
+template <typename T>
+void BubbleSort(T* list,size_t size,bool (*Compare)(T,T) = Greater);
+template <typename T>
+void SelectionSort(T* list,size_t size,bool (*Compare)(T,T) = Greater);
+template <typename T>
+void InsertSort(T* list,size_t size,bool (*Compare)(T,T) = Greater);
+template <typename T>
+void ShellSort(T* list,size_t size,bool (*Compare)(T,T) = Greater);
+template <typename T>
+void QuickSort(T* list,size_t size,bool (*Compare)(T,T) = Greater);
+template <typename T>
+void MergeSort(T* list,size_t size,bool (*Compare)(T,T) = Greater);
+template <typename T>
+void HeapSort(T* list,size_t size,bool (*Compare)(T,T) = Greater);
 
 template <typename T>
-void BubbleSort(T* list,size_t size,bool (*Compare)(T,T));
-template <typename T>
-void SelectionSort(T* list,size_t size,bool (*Compare)(T,T));
-template <typename T>
-void InsertSort(T* list,size_t size,bool (*Compare)(T,T));
-template <typename T>
-void ShellSort(T* list,size_t size,bool (*Compare)(T,T));
-template <typename T>
-void QuickSort(T* list,size_t size,bool (*Compare)(T,T));
-template <typename T>
-void MergeSort(T* list,size_t size,bool (*Compare)(T,T));
-template <typename T>
-void HeapSort(T* list,size_t size,bool (*Compare)(T,T));
+bool Greater(T x,T y)
+{
+    try {
+        if (is_same<T, int>()
+            || is_same<T, float>()
+            || is_same<T, double>()
+            || is_same<T, unsigned int>()
+            || is_same<T, signed long int>()
+            || is_same<T, unsigned long int>()
+            || is_same<T, unsigned long long int>()
+            || is_same<T, signed long long int>()
+            || is_same<T, char>()
+            || is_same<T, unsigned char>()
+            || is_same<T, signed char>()
+            || is_same<T, unsigned short int>()
+            || is_same<T, signed short int>()
+            || is_same<T, long double>()) {
+            return x > y;
+        } else {
+            throw exception();
+        }
+    }catch(...){
+        cout << "No match default function for this type." << endl;
+    }
+}
 
 /***
  *

@@ -1,5 +1,5 @@
-#ifndef TEST_THREADPOOL_H
-#define TEST_THREADPOOL_H
+#ifndef THREADPOOL_H
+#define THREADPOOL_H
 
 /***
  *

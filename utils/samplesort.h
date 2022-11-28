@@ -1,5 +1,5 @@
-#ifndef TEST_SAMPLESORT_H
-#define TEST_SAMPLESORT_H
+#ifndef SAMPLESORT_H
+#define SAMPLESORT_H
 
 #include <iostream>
 #include <thread>
