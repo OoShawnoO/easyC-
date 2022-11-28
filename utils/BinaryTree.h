@@ -27,19 +27,28 @@
 
 using namespace std;
 
+enum Color
+{
+    RED,
+    BLACK
+};
+
 template <typename T>
 struct BinaryTreeNode{
     BinaryTreeNode* parent;
     BinaryTreeNode* left;
     BinaryTreeNode* right;
     T data;
+    Color color;
 public:
     explicit BinaryTreeNode(T _data,
+                            Color _color = RED,
                             BinaryTreeNode* _parent = nullptr,
                             BinaryTreeNode* _left = nullptr,
                             BinaryTreeNode* _right = nullptr):
-            data(_data),parent(_parent),left(_left),right(_right){}
+            data(_data),color(_color),parent(_parent),left(_left),right(_right){}
 };
+
 
 template <typename T>
 class BinaryTree
@@ -209,9 +218,10 @@ public:
         BinaryTree<T>::size++;
         return true;
     }
-    bool Delete(T _data,bool (*Compare)(T,T) = Greater)
+    BinaryTreeNode<T>* Find(T _data,bool (*Compare)(T,T) = Greater)
     {
-        if(!Contains(_data)) return false;
+        if(!BinaryTree<T>::root) return nullptr;
+        if(!Contains(_data)) return nullptr;
         auto cur = BinaryTree<T>::root;
         while(cur->data != _data)
         {
@@ -224,14 +234,46 @@ public:
                 cur = cur->left;
             }
         }
+        return cur;
+    }
+    bool Delete(T _data,bool (*Compare)(T,T) = Greater)
+    {
+        BinaryTreeNode<T>* cur;
+        if(!(cur = Find(_data,Compare))) return false;
         auto par = cur->parent;
-        if(Compare(cur->data,par->data))
+        if(!cur->left && !cur->right)
         {
-            par->right = nullptr;
+
+        }
+        else if(!cur->left && cur->right)
+        {
+
+            if(!par) BinaryTree<T>::root = cur->right;
+            else{
+                (par->left == cur ? par->left : par->right) = cur->right;
+            }
+        }
+        else if(!cur->right && cur->left)
+        {
+            if(!par) BinaryTree<T>::root = cur->left;
+            else
+            {
+                (par->right == cur ? par->right : par->left) = cur->left;
+            }
         }
         else
         {
-            par->left = nullptr;
+            auto node = cur->right;
+            if(!par) BinaryTree<T>::root = cur->right;
+            else
+            {
+                (par->right == cur ? par->right : par->left) = cur->right;
+            }
+            while(node->left){
+                node = node->left;
+            }
+            node->left = cur->left;
+
         }
         delete cur;
         BinaryTree<T>::size--;
@@ -239,5 +281,11 @@ public:
     }
 };
 
+template <typename T>
+class RB_BinaryTree : public BinarySearchTree<T>
+{
+public:
+
+};
 
 #endif
