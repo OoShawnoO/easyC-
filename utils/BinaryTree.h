@@ -44,31 +44,50 @@ public:
 template <typename T>
 class BinaryTree
 {
+private:
+    size_t BinaryTreeHeight(BinaryTreeNode<T>* node)
+    {
+        if(!node) return 0;
+        return BinaryTreeHeight(node->left) > BinaryTreeHeight(node->right) ?
+        BinaryTreeHeight(node->left) + 1 :
+        BinaryTreeHeight(node->right) + 1;
+    }
+
+    size_t BinaryTreeLeaves(BinaryTreeNode<T>* node)
+    {
+        size_t count;
+        if(node == nullptr) count = 0;
+        else if(node->right == nullptr && node->left == nullptr) count = 1;
+        else{
+            count = BinaryTreeLeaves(node->right) + BinaryTreeLeaves(node->left);
+        }
+        return count;
+    }
 protected:
     BinaryTreeNode<T>* root{};
     size_t size;
-    size_t depth;
-    size_t leaves;
 public:
     BinaryTree(){
         root = nullptr;
         size = 0;
-        depth = 0;
-        leaves = 0;
     }
     explicit BinaryTree(T _data){
         root = new BinaryTreeNode<T>(_data);
         size = 1;
-        depth = 1;
-        leaves = 0;
     }
     ~BinaryTree(){
         delete root;
     }
 
-    inline size_t getSize(){return size;}
-    inline size_t getDepth(){return depth;}
-    inline size_t getLeaves(){return leaves;}
+    inline virtual size_t getSize(){return size;}
+    virtual size_t getDepth()
+    {
+        return BinaryTreeHeight(root);
+    }
+    virtual size_t getLeaves()
+    {
+        return BinaryTreeLeaves(root);
+    }
 
     virtual vector<T> PreOrderTraverse()
     {
@@ -163,12 +182,18 @@ public:
         {
             if(Compare(_data,cur->data))
             {
-                if(cur->right) cur = cur->right;
+                if(cur->right)
+                {
+                    cur = cur->right;
+                }
                 else break;
             }
             else
             {
-                if(cur->left) cur = cur->left;
+                if(cur->left)
+                {
+                    cur = cur->left;
+                }
                 else break;
             }
         }
@@ -181,6 +206,7 @@ public:
             cur->left = node;
         }
         node->parent = cur;
+        BinaryTree<T>::size++;
         return true;
     }
     bool Delete(T _data,bool (*Compare)(T,T) = Greater)
@@ -208,6 +234,8 @@ public:
             par->left = nullptr;
         }
         delete cur;
+        BinaryTree<T>::size--;
+        return true;
     }
 };
 
